@@ -1,0 +1,10 @@
+{
+  "name": "AI SignBridge",
+  "description": "Real-time Sign Language Translation platform with computer vision hand tracking, machine learning gesture recognition, and Gemini-powered smart translation.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
