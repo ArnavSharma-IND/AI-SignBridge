@@ -1,119 +1,268 @@
-# AI SignBridge – Real-Time Sign Language Translator
+# AI SignBridge – Real-Time Sign Language Translation Platform
 
-AI SignBridge is a highly responsive full-stack, AI-powered Sign Language Translation Platform that uses high-performance computer vision, in-browser machine learning landmarks tracking, and the Google Gemini API to translate hand gesture sequences into natural, polite text and audible speech in real time.
+## 🌟 Overview
 
----
+AI SignBridge is an AI-powered accessibility platform designed to bridge communication gaps between deaf, mute, and hearing individuals. Using Computer Vision, Machine Learning, and Generative AI, the system recognizes sign language gestures in real time through a webcam and converts them into text and speech, enabling seamless communication.
 
-## Key Features
-
-1. **Real-Time Hand Tracking & Overlay**:
-   * Leverages official Google MediaPipe Hands and Camera CDNs to track all 21 hand joints.
-   * Renders a glowing, cyber-inspired interactive vector mesh mapped over the live webcam canvas feed.
-
-2. **Dual-Layer Gesture Recognition Engine**:
-   * **Mathematical Heuristics**: Deterministically matches joint bends and extension vectors for standard alphabets (`A`, `B`, `C`, `D`, `E`, `F`, `K`, `L`, `U`, `V`, `W`, `Y`) and numbers (`0–9`).
-   * **K-Nearest Neighbors (KNN) Vector Classifier**: Enables users to capture custom landmark structures, saving the normalized 3D vectors to train personalized gestures in real-time.
-
-3. **Smart AI Translation & Context Correction**:
-   * Connects to a secure full-stack Node/Express backend that proxies requests to `gemini-3.5-flash`.
-   * Reconstructs fragmented, raw sign keyframes into grammatically perfect, natural sentences.
-   * Accounts for conversational context labels (e.g., Casual, Hospital, Emergency Desk).
-
-4. **Kinetics-Based Emotion Analyzer**:
-   * Measures the 3D velocity vectors of the hand wrist to classify the emotional tone (e.g., excited, expressive, calm, apprehensive, distressed) accompanying the sign.
-
-5. **Integrated Emergency Safety Beacon**:
-   * Triggers an emergency "SOS" overlay if a help sign is held for more than 1.5 seconds.
-   * Sounds a high-pitched synthetic alarm using the browser’s Web Audio API.
-   * Dynamically tracks GPS coordinates via the HTML5 Geolocation API, preparing coordinates for safety alerts.
-
-6. **Accessibility Options**:
-   * **Large Text Mode**: Fluidly magnifies margins, paddings, and font sizes across dashboards.
-   * **Text-To-Speech (TTS) Vocalizer**: Reads corrected sentences out loud in targeted languages and custom speeds (0.8x, 1.0x, 1.3x).
-   * **Multilingual Translation**: Supports conversion and correction into English, Hindi, Bengali, and Marathi scripts.
+The project aims to promote inclusivity and accessibility across healthcare, education, workplaces, public services, and everyday interactions.
 
 ---
 
-## Tech Stack & Architecture
+## 🚨 Problem Statement
 
-* **Frontend**: React 19, TypeScript, Tailwind CSS, Recharts (visual telemetry charts), Lucide-React.
-* **Backend**: Node.js, Express, tsx (for TS dev execution), esbuild (for production-ready server bundling).
-* **AI/ML**: MediaPipe Hands, HTML5 Camera API, K-Nearest Neighbors Euclidean classification, Cosine Similarity calculations, Google Gemini API (`@google/genai` on server).
+Millions of deaf and speech-impaired individuals rely on sign language as their primary means of communication. However, most people do not understand sign language, creating barriers in:
 
----
+* Education
+* Healthcare
+* Public Services
+* Employment
+* Daily Communication
 
-## Machine Learning & Normalization Math
-
-To keep gesture recognition invariant to hand size, position, or camera distance, we normalize raw MediaPipe landmarks:
-
-1. **Translation**: Shift the wrist joint (landmark 0) to coordinate `(0,0,0)`.
-   $$P_{\text{translated}}[i] = P_{\text{raw}}[i] - P_{\text{raw}}[0]$$
-2. **Scaling**: Compute the 3D scale index using the distance from the wrist to the middle finger MCP knuckle (landmark 9).
-   $$\text{Scale} = \text{Distance}(P_{\text{translated}}[9], \{0,0,0\})$$
-3. **Normalization**: Divide coordinates by the scale value.
-   $$P_{\text{normalized}}[i] = \frac{P_{\text{translated}}[i]}{\text{Scale}}$$
-
-This normalized $21 \times 3$ coordinate vector is used by our KNN algorithm to compute cosine distances against saved gesture templates to calculate precise matching confidence scores.
+Existing solutions often require specialized hardware, limited datasets, or lack contextual understanding.
 
 ---
 
-## Installation & Setup Guide
+## 💡 Solution
 
-### 1. Prerequisites
-Ensure you have Node.js (v18+) and npm installed.
+AI SignBridge leverages Artificial Intelligence and Machine Learning to translate sign language gestures into meaningful text and speech in real time.
 
-### 2. Configure Credentials
-Add a `.env` file or export your Gemini API key:
-```env
-GEMINI_API_KEY="YOUR_ACTUAL_GEMINI_SECRET_KEY"
-```
+The platform uses hand landmark detection, gesture classification, natural language processing, and speech synthesis to create an intuitive communication experience.
 
-### 3. Install Dependencies
-```bash
-npm install
-```
+---
 
-### 4. Run Development Server
-Executes the Express backend with joint Vite dev injection on Port 3000:
-```bash
-npm run dev
-```
+## ✨ Key Features
 
-### 5. Production Compilation
-Bundles the React client application and compiles the Express backend TypeScript file into a single optimized `"dist/server.cjs"` file with sourcemaps:
-```bash
-npm run build
-npm start
+### 🤖 Real-Time Gesture Recognition
+
+* Webcam-based hand tracking
+* MediaPipe-powered landmark detection
+* Instant gesture classification
+
+### 📝 Sign-to-Text Translation
+
+* Converts recognized gestures into readable text
+* Supports continuous sentence formation
+
+### 🔊 Text-to-Speech Conversion
+
+* Converts translated text into natural speech
+* Enhances communication accessibility
+
+### 🧠 AI-Powered Sentence Enhancement
+
+* Context-aware sentence correction
+* Grammar refinement using Generative AI
+
+### 🌍 Multilingual Support
+
+* Translate outputs into multiple languages
+* Broader accessibility for diverse communities
+
+### 😊 Emotion Recognition
+
+* Detect emotional context through gesture and facial analysis
+* Improve communication accuracy
+
+### 🚨 Emergency SOS Detection
+
+* Recognize emergency gestures
+* Trigger alerts and emergency actions
+
+### 📚 Sign Language Learning Mode
+
+* Interactive learning experience
+* Practice and improve sign language skills
+
+---
+
+## 🏗️ System Architecture
+
+```text
+User Gesture
+      │
+      ▼
+Webcam Input
+      │
+      ▼
+OpenCV Video Processing
+      │
+      ▼
+MediaPipe Hand Tracking
+      │
+      ▼
+21 Hand Landmark Extraction
+      │
+      ▼
+Machine Learning Model
+      │
+      ▼
+Gesture Classification
+      │
+      ▼
+Text Translation
+      │
+      ▼
+Gemini AI Enhancement
+      │
+      ▼
+Text-to-Speech Output
 ```
 
 ---
 
-## Docker & Container Deployment Guide
+## ⚙️ Technology Stack
 
-To deploy AI SignBridge inside high-performance, stateless server environments like Cloud Run, use the following configurations:
+### Frontend
 
-### 1. Dockerfile
-Create a `Dockerfile` in the root:
-```dockerfile
-FROM node:20-alpine
+* Next.js
+* TypeScript
+* Tailwind CSS
 
-WORKDIR /app
+### Backend
 
-COPY package*.json ./
-RUN npm ci
+* FastAPI
+* Python
 
-COPY . .
+### AI & Machine Learning
 
-ENV NODE_ENV=production
-RUN npm run build
+* OpenCV
+* MediaPipe
+* TensorFlow
+* Scikit-Learn
+* NumPy
 
-EXPOSE 3000
+### Generative AI
 
-CMD ["npm", "start"]
-```
+* Gemini API
 
-### 2. Formulate Image & Run Container
-```bash
-docker build -t ai-signbridge .
-docker run -p 3000:3000 --env GEMINI_API_KEY="YOUR_API_KEY" ai-signbridge
-```
+### Database
+
+* Firebase
+* Supabase
+
+### Deployment
+
+* Vercel
+* Render
+
+---
+
+## 🔬 AI/ML Components
+
+### Computer Vision
+
+* Real-time video capture
+* Hand landmark extraction
+* Gesture tracking
+
+### Gesture Classification
+
+* Feature engineering from landmark coordinates
+* Machine Learning prediction model
+* Confidence score generation
+
+### NLP & AI Enhancement
+
+* Sentence correction
+* Context-aware translation
+* Smart phrase completion
+
+---
+
+## 🎯 Use Cases
+
+### 🏥 Healthcare
+
+Improve communication between patients and healthcare professionals.
+
+### 🎓 Education
+
+Assist students in classrooms and learning environments.
+
+### 🏢 Workplace Accessibility
+
+Enable seamless communication among diverse teams.
+
+### 🚉 Public Services
+
+Improve accessibility in transportation, banking, and government services.
+
+### 🏠 Smart Homes
+
+Control devices using sign language gestures.
+
+---
+
+## 📈 Expected Impact
+
+* Promote inclusive communication
+* Improve accessibility for millions of users
+* Reduce dependence on interpreters
+* Enhance educational opportunities
+* Improve workplace inclusivity
+* Support emergency communication
+
+---
+
+## 🛣️ Project Roadmap
+
+### Phase 1
+
+* Research and dataset collection
+* Sign language analysis
+
+### Phase 2
+
+* Hand tracking implementation
+* Gesture classification model training
+
+### Phase 3
+
+* Translation and speech synthesis integration
+
+### Phase 4
+
+* AI-powered sentence enhancement
+* Emotion recognition
+* Multilingual support
+
+### Phase 5
+
+* Testing, optimization, and deployment
+
+---
+
+## 🚀 Future Enhancements
+
+* Mobile Application
+* Wearable Device Integration
+* Smart Glass Support
+* Advanced Sign Language Datasets
+* Offline Translation Capability
+* Real-Time Video Call Translation
+* Multi-Language Sign Recognition
+
+---
+
+## 👥 Team
+
+### Team Null Pointers
+
+**Members**
+
+* Arnav Sharma
+* Sourasish Karak
+
+---
+
+## 🏆 Hackathon Vision
+
+AI SignBridge is more than a translator—it is a step toward a world where communication is accessible to everyone regardless of physical abilities.
+
+**"Empowering Inclusive Communication Through Artificial Intelligence."**
+
+---
+
+## 📄 License
+
+This project is developed for educational, research, and hackathon purposes. Future versions may be released under an open-source license.
